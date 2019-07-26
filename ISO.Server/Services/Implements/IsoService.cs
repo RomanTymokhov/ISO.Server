@@ -22,10 +22,10 @@ namespace ISO.Server.Services.Implements
         public Currency GetCurrencyBySimbol(string symbol)
             => currencyTable.CcyNtry.FirstOrDefault(c => c.Ccy == symbol);
 
-        public ICollection<Currency> GetCurrensies()
+        public IEnumerable<Currency> GetCurrensies()
             => currencyTable.CcyNtry;
 
-        public ICollection<MerchantCategory> GetMerchantCategories()
+        public IEnumerable<MerchantCategory> GetMerchantCategories()
             => mccTable.MccNtry;
 
         public MerchantCategory GetMerchantCategoryById(int id)

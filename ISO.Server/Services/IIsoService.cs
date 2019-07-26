@@ -5,11 +5,11 @@ namespace ISO.Server.Services
 {
     public interface IIsoService
     {
-        ICollection<Currency> GetCurrensies();
+        IEnumerable<Currency> GetCurrensies();
         Currency GetCurrencyByCode(string code);
-        Currency GetCurrencyBySimbol(string symbol);
+        Currency GetCurrencyBySimbol(string smbol);
 
-        ICollection<MerchantCategory> GetMerchantCategories();
+        IEnumerable<MerchantCategory> GetMerchantCategories();
         MerchantCategory MerchantCategoryByCode(string code);
         MerchantCategory GetMerchantCategoryById(int id);
     }
