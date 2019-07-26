@@ -2,7 +2,7 @@
 
 namespace ISO.Server.DTO
 {
-    public class CurrencyCode
+    public class Currency
     {
         [JsonProperty("CtryNm")]
         public string CtryNm { get; set; }

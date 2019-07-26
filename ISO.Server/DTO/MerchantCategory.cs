@@ -2,7 +2,7 @@
 
 namespace ISO.Server.DTO
 {
-    public class MerchantCategoryCode
+    public class MerchantCategory
     {
         [JsonProperty("mcc")]
         public string Mcc { get; set; }
