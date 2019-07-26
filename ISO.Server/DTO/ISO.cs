@@ -35,7 +35,7 @@ namespace ISO.Server.DTO
         public string Pblshd { get; set; }
 
         [JsonProperty("MccTbl")]
-        public CurrencyTable MccTbl { get; set; }
+        public MccTable MccTbl { get; set; }
     }
 
     public class MccTable
