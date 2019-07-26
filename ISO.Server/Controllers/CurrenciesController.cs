@@ -16,9 +16,7 @@ namespace ISO.Server.Controllers
         
         [HttpGet]
         public ActionResult<IEnumerable<Currency>> Get()
-        {
-            return Ok(_isoService.GetCurrensies());
-        }
+            => Ok(_isoService.GetCurrensies());
         
         [HttpGet("{id}")]
         public ActionResult<Currency> Get(string id)

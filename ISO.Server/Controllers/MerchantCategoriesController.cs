@@ -16,9 +16,7 @@ namespace ISO.Server.Controllers
         
         [HttpGet]
         public ActionResult<IEnumerable<MerchantCategory>> Get()
-        {
-            return Ok(_isoService.GetMerchantCategories());
-        }
+            => Ok(_isoService.GetMerchantCategories());
 
         [HttpGet("{code}", Name = "Get")]
         public ActionResult<MerchantCategory> Get(string code)
