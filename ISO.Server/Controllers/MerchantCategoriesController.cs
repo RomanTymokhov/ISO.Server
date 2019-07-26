@@ -23,7 +23,7 @@ namespace ISO.Server.Controllers
         [HttpGet("{code}", Name = "Get")]
         public ActionResult<MerchantCategory> Get(string code)
         {
-            var mcc = _isoService.MerchantCategoryByCode(code);
+            var mcc = _isoService.GetMerchantCategoryByCode(code);
             if (mcc != null) return Ok(mcc);
             else return NotFound(new Error { Description = "No category matching this ID" });
         }

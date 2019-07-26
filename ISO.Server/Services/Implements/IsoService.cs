@@ -31,7 +31,7 @@ namespace ISO.Server.Services.Implements
         public MerchantCategory GetMerchantCategoryById(int id)
             => mccTable.MccNtry.FirstOrDefault(m => m.Id == id);
 
-        public MerchantCategory MerchantCategoryByCode(string code)
+        public MerchantCategory GetMerchantCategoryByCode(string code)
             => mccTable.MccNtry.FirstOrDefault(m => m.Mcc == code);
     }
 }

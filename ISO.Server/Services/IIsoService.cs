@@ -10,7 +10,7 @@ namespace ISO.Server.Services
         Currency GetCurrencyBySimbol(string smbol);
 
         IEnumerable<MerchantCategory> GetMerchantCategories();
-        MerchantCategory MerchantCategoryByCode(string code);
+        MerchantCategory GetMerchantCategoryByCode(string code);
         MerchantCategory GetMerchantCategoryById(int id);
     }
 }
