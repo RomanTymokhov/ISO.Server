@@ -25,7 +25,7 @@ namespace ISO.Server.Controllers
         {
             var mcc = _isoService.MerchantCategoryByCode(code);
             if (mcc != null) return Ok(mcc);
-            else return NotFound();
+            else return NotFound(new Error { Description = "No category matching this ID" });
         }
     }
 }

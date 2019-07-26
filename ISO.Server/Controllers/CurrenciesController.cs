@@ -23,15 +23,15 @@ namespace ISO.Server.Controllers
         [HttpGet("{id}")]
         public ActionResult<Currency> Get(string id)
         {
-            var answ = CheckInput(id.ToUpper());
+            var answ = CheckInput(id);
             if (answ != null) return Ok(answ);
-            else return NotFound();
+            else return NotFound(new Error { Description = "No currency matching this ID" });
         }
 
         private Currency CheckInput(string input)
         {
             var cbc = _isoService.GetCurrencyByCode(input);
-            if (cbc == null) return _isoService.GetCurrencyBySimbol(input);
+            if (cbc == null) return _isoService.GetCurrencyBySimbol(input.ToUpper());
             else return cbc;
         }
     }
