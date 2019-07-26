@@ -25,7 +25,7 @@ namespace ISO.Server.DTO
     public class CurrencyTable
     {
         [JsonProperty("CcyNtry")]
-        public ICollection<Currency> CcyNtry { get; set; }
+        public IEnumerable<Currency> CcyNtry { get; set; }
     }
 
     // ------ ISO 18245 -------- //
@@ -41,6 +41,6 @@ namespace ISO.Server.DTO
     public class MccTable
     {
         [JsonProperty("MccNtry")]
-        public ICollection<MerchantCategory> MccNtry { get; set; }
+        public IEnumerable<MerchantCategory> MccNtry { get; set; }
     }
 }
