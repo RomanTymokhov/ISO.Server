@@ -1,6 +1,7 @@
 ﻿using ISO.Server.DTO;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 
 namespace ISO.Server.Services.Implements
@@ -16,22 +17,22 @@ namespace ISO.Server.Services.Implements
             mccTable = isoOptions.Value.ISO_18245.MccTbl;
         }
 
-        public Currency GetCurrencyByCode(string code)
-            => currencyTable.CcyNtry.FirstOrDefault(c => c.CcyNbr == code);
+        public async Task<Currency> GetCurrencyByCode(string code)
+            => await Task.Run(() => currencyTable.CcyNtry.FirstOrDefault(c => c.CcyNbr == code));
 
-        public Currency GetCurrencyBySimbol(string symbol)
-            => currencyTable.CcyNtry.FirstOrDefault(c => c.Ccy == symbol);
+        public async Task<Currency> GetCurrencyBySimbol(string symbol)
+            => await Task.Run(() => currencyTable.CcyNtry.FirstOrDefault(c => c.Ccy == symbol));
 
-        public IEnumerable<Currency> GetCurrensies()
-            => currencyTable.CcyNtry;
+        public async Task<IEnumerable<Currency>> GetCurrensies()
+            => await Task.Run(() => currencyTable.CcyNtry);
 
-        public IEnumerable<MerchantCategory> GetMerchantCategories()
-            => mccTable.MccNtry;
+        public async Task<IEnumerable<MerchantCategory>> GetMerchantCategories()
+            => await Task.Run(() => mccTable.MccNtry);
 
-        public MerchantCategory GetMerchantCategoryById(int id)
-            => mccTable.MccNtry.FirstOrDefault(m => m.Id == id);
+        public async Task<MerchantCategory> GetMerchantCategoryById(int id)
+            => await Task.Run(() => mccTable.MccNtry.FirstOrDefault(m => m.Id == id));
 
-        public MerchantCategory GetMerchantCategoryByCode(string code)
-            => mccTable.MccNtry.FirstOrDefault(m => m.Mcc == code);
+        public async Task<MerchantCategory> GetMerchantCategoryByCode(string code)
+            => await Task.Run(() => mccTable.MccNtry.FirstOrDefault(m => m.Mcc == code));
     }
 }

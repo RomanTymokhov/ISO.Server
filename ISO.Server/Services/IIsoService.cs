@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ISO.Server.DTO;
 
 namespace ISO.Server.Services
 {
     public interface IIsoService
     {
-        IEnumerable<Currency> GetCurrensies();
-        Currency GetCurrencyByCode(string code);
-        Currency GetCurrencyBySimbol(string smbol);
+        Task<IEnumerable<Currency>> GetCurrensies();
+        Task<Currency> GetCurrencyByCode(string code);
+        Task<Currency> GetCurrencyBySimbol(string smbol);
 
-        IEnumerable<MerchantCategory> GetMerchantCategories();
-        MerchantCategory GetMerchantCategoryByCode(string code);
-        MerchantCategory GetMerchantCategoryById(int id);
+        Task<IEnumerable<MerchantCategory>> GetMerchantCategories();
+        Task<MerchantCategory> GetMerchantCategoryByCode(string code);
+        Task<MerchantCategory> GetMerchantCategoryById(int id);
     }
 }
