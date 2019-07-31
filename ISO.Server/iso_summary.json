@@ -10806,6 +10806,15 @@
           "irs_description": "Intra-Company Purchases",
           "irs_reportable": "No1.6041-3(c)",
           "id": 980
+        },
+        {
+          "mcc": "6536",
+          "edited_description": "Money transfers within the country (MasterCard MoneySend)",
+          "combined_description": "Money transfers within the country (MasterCard MoneySend)",
+          "usda_description": "Money transfers within the country (MasterCard MoneySend)",
+          "irs_description": "",
+          "irs_reportable": "",
+          "id": 981
         }
       ]
     }
