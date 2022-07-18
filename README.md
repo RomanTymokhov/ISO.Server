@@ -4,4 +4,4 @@ This service allows you to receive currency codes and categories of merchants ac
 How it's work:
 1. Build docker image
 2. Run docker container
-3. Go to swagger pahe --> `http://localhost:{port}/swagger`
+3. Go to swagger page --> `http://localhost:{port}/swagger`
