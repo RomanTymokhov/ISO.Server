@@ -1,24 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using ISO.Server.Contracts;
+using ISO.Server.Models.Dto;
+using ISO.Server.Services;
 
-namespace ISO.Server
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("Assets/Iso.json");
+builder.Services.Configure<Iso>(builder.Configuration);
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddScoped<IIso4217, Iso4217Service>();
+builder.Services.AddScoped<IIso18245, Iso18245Service>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

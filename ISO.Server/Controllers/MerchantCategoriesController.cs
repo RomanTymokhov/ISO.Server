@@ -1,33 +1,53 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using ISO.Server.Contracts;
+using ISO.Server.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
-using ISO.Server.Services;
-using ISO.Server.DTO;
 
-namespace ISO.Server.Controllers
+namespace ISO.Server.Controllers;
+
+[Route("[controller]")]
+[ApiController]
+public class MerchantCategoriesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MerchantCategoriesController : ControllerBase
+    // https://static.sovest.com/mcc-codes.pdf
+    // https://mcc-codes.ru/code
+
+    private readonly IIso18245 _iso18245;
+
+    public MerchantCategoriesController(IIso18245 iso18245)
     {
-        // https://static.sovest.com/mcc-codes.pdf
-        // https://mcc-codes.ru/code
+        _iso18245 = iso18245;
+    }
 
-        private readonly IIsoService _isoService;
-
-        public MerchantCategoriesController(IIsoService isoService)
-            => _isoService = isoService;
-        
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MerchantCategory>>> Get()
-            => Ok(await _isoService.GetMerchantCategories());
-
-        [HttpGet("{code}")]
-        public async Task<ActionResult<MerchantCategory>> Get(string code)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MerchantCategory>>> Get()
+    {
+        try
         {
-            var mcc = await _isoService.GetMerchantCategoryByCode(code);
-            if (mcc != null) return Ok(mcc);
-            else return NotFound(new Error { Description = "No category matching this ID" });
+            return Ok(await _iso18245.GetMerchantCategoriesAsync());
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
+
+      [HttpGet("{code}")]
+        public async Task<ActionResult<MerchantCategory>> Get(string code)
+        {
+            try
+            {
+                var result = await _iso18245.GetMerchantCategoryByCodeAsync(code);
+
+                if (result.GetType() == typeof(DefaultMerchantCategory))
+                {
+                    return NotFound(((DefaultMerchantCategory)result).NotFoundCategory(code));
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 }

@@ -1,37 +1,72 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using ISO.Server.Contracts;
+using ISO.Server.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
-using ISO.Server.Services;
-using ISO.Server.DTO;
 
-namespace ISO.Server.Controllers
+namespace ISO.Server.Controllers;
+
+[Route("[controller]")]
+[ApiController]
+public class CurrenciesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CurrenciesController : ControllerBase
+    private readonly IIso4217 _iso4217;
+
+    public CurrenciesController(IIso4217 iso4217)
     {
-        private readonly IIsoService _isoService;
-
-        public CurrenciesController(IIsoService isoService)
-            => _isoService = isoService;
-        
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Currency>>> Get()
-            => Ok(await _isoService.GetCurrensies());
-        
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Currency>> Get(string id)
+        _iso4217 = iso4217;
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Currency>>> Get()
+    {
+        try
         {
-            var answ = await CheckInput(id);
-            if (answ != null) return Ok(answ);
-            else return NotFound(new Error { Description = "No currency matching this ID" });
+            return Ok(await _iso4217.GetCurrensiesAsync());
         }
-
-        private async Task<Currency> CheckInput(string input)
+        catch (Exception ex)
         {
-            var cbc = await _isoService.GetCurrencyByCode(input);
-            if (cbc == null) return await _isoService.GetCurrencyBySimbol(input.ToUpper());
-            else return cbc;
+            return BadRequest(ex.Message);
         }
+    }
+
+    [HttpGet("code/{code}")]
+    public async Task<ActionResult<Currency>> GetByCode(string code)
+    {
+
+            try
+            {
+                var result = await _iso4217.GetCurrencyByCodeAsync(code);
+
+                if (result.GetType() == typeof(DefaultCurrency))
+                {
+                    return NotFound(((DefaultCurrency)result).NotFoundCode(code));
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+    }
+
+    [HttpGet("symbol/{symbol}")]
+    public async Task<ActionResult<Currency>> GetBySymbol(string symbol)
+    {
+
+            try 
+            {
+                var result = await _iso4217.GetCurrencyBySimbolAsync(symbol);
+
+                if (result.GetType() == typeof(DefaultCurrency))
+                {
+                    return NotFound(((DefaultCurrency)result).NotFoundSymbol(symbol));
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
     }
 }
