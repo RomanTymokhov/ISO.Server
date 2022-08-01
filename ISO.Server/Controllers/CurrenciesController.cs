@@ -16,7 +16,7 @@ public class CurrenciesController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Currency>>> Get()
+    public async Task<ActionResult<IEnumerable<Currency>>> GetAsync()
     {
         try
         {
@@ -29,9 +29,8 @@ public class CurrenciesController : ControllerBase
     }
 
     [HttpGet("code/{code}")]
-    public async Task<ActionResult<Currency>> GetByCode(string code)
+    public async Task<ActionResult<Currency>> GetByCodeAsync(string code)
     {
-
             try
             {
                 var result = await _iso4217.GetCurrencyByCodeAsync(code);
@@ -50,9 +49,8 @@ public class CurrenciesController : ControllerBase
     }
 
     [HttpGet("symbol/{symbol}")]
-    public async Task<ActionResult<Currency>> GetBySymbol(string symbol)
+    public async Task<ActionResult<Currency>> GetBySymbolAsync(string symbol)
     {
-
             try 
             {
                 var result = await _iso4217.GetCurrencyBySimbolAsync(symbol);
