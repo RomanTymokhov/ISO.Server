@@ -19,7 +19,7 @@ public class MerchantCategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MerchantCategory>>> Get()
+    public async Task<ActionResult<IEnumerable<MerchantCategory>>> GetAsync()
     {
         try
         {
@@ -32,7 +32,7 @@ public class MerchantCategoriesController : ControllerBase
     }
 
       [HttpGet("{code}")]
-        public async Task<ActionResult<MerchantCategory>> Get(string code)
+        public async Task<ActionResult<MerchantCategory>> GetAsync(string code)
         {
             try
             {
